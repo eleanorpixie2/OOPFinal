@@ -91,6 +91,7 @@
     <Compile Include="Products\IProduct.cs" />
     <Compile Include="ShippingServices\IShippingLocation.cs" />
     <Compile Include="ShippingServices\IShippingService.cs" />
+    <Compile Include="ShippingServices\ShippingLocation.cs" />
     <Compile Include="Vehicles\IMotorVehicle.cs" />
     <Compile Include="Vehicles\IShippingVehicle.cs" />
     <Compile Include="Vehicles\MotorVehicle.cs" />

@@ -6,6 +6,7 @@ using Moq;
 using ClassLibraryFinal;
 using Ninject;
 using ClassLibraryFinal.NinjectModules;
+using Ninject.Parameters;
 
 namespace UnitTestFinal
 {
@@ -39,6 +40,40 @@ namespace UnitTestFinal
         [TestMethod]
         public void TestNinjectShippingAndDeliveryServices()
         {
+            //Arrange
+            IShippingVehicle vehicle;
+            IShippingService service;
+            IDeliveryService delivery;
+            IShippingLocation location;
+            uint destZip = 77035;
+            uint startZip = 60090;
+            uint distance;
+            uint numRefuels;
+
+            //Act
+            location = new ShippingLocation(startZip, destZip);
+            vehicle = kernel.Get<Truck>();
+            delivery = kernel.Get<UnclesTruck>();
+            service = kernel.Get<DefaultShippingService>(new ConstructorArgument("Service",delivery), 
+                new ConstructorArgument("Products", new List<IProduct>()), 
+                new ConstructorArgument("Location", location));
+
+            distance = (uint)Math.Abs(destZip - startZip);
+            numRefuels = (uint)distance / vehicle.MaxDistancePerRefuel;
+
+            //Assert
+            Assert.IsInstanceOfType(vehicle,typeof(IShippingVehicle));
+            Assert.IsInstanceOfType(vehicle,typeof(Truck));
+            Assert.IsInstanceOfType(vehicle,typeof(MotorVehicle));
+
+            Assert.IsInstanceOfType(delivery, typeof(IDeliveryService));
+            Assert.IsInstanceOfType(delivery, typeof(UnclesTruck));
+            Assert.IsInstanceOfType(delivery, typeof(DeliveryService));
+
+            Assert.IsInstanceOfType(service, typeof(IShippingService));
+            Assert.IsInstanceOfType(service, typeof(DefaultShippingService));
+            Assert.AreEqual(distance, service.ShippingDistance);
+            Assert.AreEqual(numRefuels, service.NumRefuels);
 
         }
 
