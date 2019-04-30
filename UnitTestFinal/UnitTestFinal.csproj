@@ -83,6 +83,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MockTest.cs" />
     <Compile Include="NinjectModules\ShippingServiceTestModule.cs" />
     <Compile Include="TestShippingServiceProvider.cs" />
     <Compile Include="UnitTestShippingService.cs" />
