@@ -18,6 +18,8 @@ namespace ClassLibraryFinal
 
         protected IShippingVehicle shippingVehicle;
 
+        public string NameOfService { get; protected set; }
+
         public DeliveryService(IShippingVehicle vehicle)
         {
             shippingVehicle = vehicle;

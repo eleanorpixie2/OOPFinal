@@ -10,5 +10,7 @@ namespace ClassLibraryFinal
         IShippingVehicle ShippingVehicle { get; }
 
         double CostPerRefuel { get; }
+
+        string NameOfService { get; }
     }
 }

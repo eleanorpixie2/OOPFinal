@@ -10,6 +10,7 @@ namespace ClassLibraryFinal
         public AirExpress(IShippingVehicle vehicle) : base(vehicle)
         {
             costPerRefuel = 2000;
+            NameOfService = "Air Express";
         }
     }
 }

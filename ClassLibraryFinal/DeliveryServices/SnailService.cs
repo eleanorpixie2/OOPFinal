@@ -10,6 +10,7 @@ namespace ClassLibraryFinal
         public SnailService(IShippingVehicle vehicle) : base(vehicle)
         {
             costPerRefuel = 2;
+            NameOfService = "Snail Service";
         }
     }
 }
