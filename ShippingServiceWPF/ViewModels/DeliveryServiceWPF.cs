@@ -38,7 +38,7 @@ namespace ShippingServiceWPF.ViewModels
         private void ExecuteCommandUpdateDeliveryService(object parameter)
         {
             ShippingService = new DefaultShippingService(SelectedService, new List<IProduct>(), new ShippingLocation(StartZip, DestZip));
-            RaisePropertyChanged("NumRefuels");
+            RaisePropertyChanged("NumOfRefuels");
             RaisePropertyChanged("Distance");
         }
 
@@ -88,7 +88,7 @@ namespace ShippingServiceWPF.ViewModels
         }
 
         //number of refuels needed
-        public uint NumRefuels
+        public uint NumOfRefuels
         {
             get { return ShippingService.NumRefuels; }
         }

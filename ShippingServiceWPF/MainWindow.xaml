@@ -9,7 +9,7 @@
         Title="ShippingService" Height="450" Width="800">
     <Grid>
         <StackPanel>
-            <views:ShippingServiceUserControl x:Name="ShippingView" Loaded="ChangeViewControl_Loaded" Height="419"/>
+            <views:ShippingServiceUserControl x:Name="ShippingView" Loaded="ChangeViewControl_Loaded" Height="444"/>
 
         </StackPanel>
     </Grid>

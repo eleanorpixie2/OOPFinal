@@ -8,26 +8,26 @@
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="DefaultShippingService">
     <Grid>
-        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="209" Margin="175,140,0,0" Height="36" 
+        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="209" Margin="170,152,0,0" Height="36" 
                   ItemsSource="{Binding DeliveryServices}" SelectedItem="{Binding SelectedService}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" >
-                        <TextBlock FontSize="20" TextAlignment="Center" Text="{Binding Path=NameOfService}"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock FontSize="20" HorizontalAlignment="Center" TextAlignment="Center" Text="{Binding Path=NameOfService}"/>
                     </StackPanel>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <Label Margin="10,204,630,210" Content="Starting ZipCode:" HorizontalContentAlignment="Center"/>
-        <Label Margin="10,266,630,148" Content="Destination ZipCode:" HorizontalContentAlignment="Center"/>
-        <Label Margin="416,140,224,274" Content="Number of Refuels Needed:" HorizontalContentAlignment="Center"/>
-        <Label Margin="416,204,224,210" Content="Total Distance of Trip:" HorizontalContentAlignment="Center"/>
-        <Label Margin="10,140,630,274" Content="Delivery Service:" HorizontalContentAlignment="Center"/>
+        <Label FontSize="15" Margin="10,237,630,142" Content="Starting ZipCode:" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+        <Label FontSize="15" Margin="10,331,630,64" Content="Destination ZipCode:" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+        <Label FontSize="14" Margin="384,140,219,255" Content="Number of Refuels Needed:" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+        <Label FontSize="15" Margin="389,248,224,162" Content="Total Distance of Trip:" HorizontalContentAlignment="Left" VerticalAlignment="Center" Height="40" />
+        <Label FontSize="15" Margin="0,140,640,255" Content="Delivery Service:" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
 
-        <TextBox Margin="581,140,10,274"/>
-        <TextBox Margin="581,204,10,210"/>
-        <TextBox Margin="175,204,416,210"/>
-        <TextBox Margin="175,266,416,148"/>
+        <TextBox Margin="581,140,10,255" Text="{Binding NumOfRefuels, Mode=OneWay}"/>
+        <TextBox Margin="581,237,10,158" Text="{Binding Distance, Mode=OneWay}"/>
+        <TextBox Margin="175,237,416,158" Text="{Binding Path=StartZip, Mode=TwoWay}"/>
+        <TextBox Margin="175,331,416,64" Text="{Binding Path=DestZip, Mode=TwoWay}"/>
     </Grid>
 </UserControl>

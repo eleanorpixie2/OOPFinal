@@ -21,7 +21,7 @@ namespace ClassLibraryFinal
         protected uint getShippingDistance()
         {
             //terrible way to determine distance insn't real
-            return (uint)Math.Abs(this.ShippingLocation.DestinationZipCode - this.ShippingLocation.StartZipCode);
+            return (uint)Math.Abs((int)ShippingLocation.DestinationZipCode - (int)ShippingLocation.StartZipCode);
         }
         public uint NumRefuels
         {
