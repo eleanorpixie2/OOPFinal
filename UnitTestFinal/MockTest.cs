@@ -16,11 +16,8 @@ namespace UnitTestFinal
     [TestClass]
     public class MockTest
     {
-        //moq
-        Mock<IShippingService> mockShippingService;
-        Mock<IShippingLocation> mockLocation;
-        Mock<IDeliveryService> mockDeliveryService;
-        Mock<IShippingVehicle> mockShippingVehicle;
+       
+       
 
         //ninject
         IKernel kernel;
@@ -29,11 +26,7 @@ namespace UnitTestFinal
         {
             //initalize kernel
             kernel=new StandardKernel(new ShippingServiceModule());
-            //intialize mock objects
-            mockShippingService = new Mock<IShippingService>();
-            mockLocation = new Mock<IShippingLocation>();
-            mockDeliveryService = new Mock<IDeliveryService>();
-            mockShippingVehicle = new Mock<IShippingVehicle>();
+          
 
         }
         
@@ -78,6 +71,59 @@ namespace UnitTestFinal
         }
 
         [TestMethod]
+        public void TestMoqVehicle()
+        {
+            //setup
+            uint maxDist = 5000;
+            uint maxWeight = 1000;
+            uint topSpeed = 200;
+            Mock<IShippingVehicle> mockShippingVehicle = new Mock<IShippingVehicle>();
+
+            //act
+
+            //create mock vehicle
+            mockShippingVehicle.SetupGet(vc => vc.MaxDistancePerRefuel).Returns(5000);
+            mockShippingVehicle.SetupGet(vc => vc.MaxWeight).Returns(1000);
+            mockShippingVehicle.SetupGet(vc => vc.TopSpeed).Returns(200);
+
+            //Assert
+            //shipping vehicles
+            Assert.AreEqual(maxDist, mockShippingVehicle.Object.MaxDistancePerRefuel);
+            Assert.AreEqual(maxWeight, mockShippingVehicle.Object.MaxWeight);
+            Assert.AreEqual(topSpeed, mockShippingVehicle.Object.TopSpeed);
+
+        }
+
+        [TestMethod]
+        public void TestMoqDeliveryServices()
+        {
+            //setup
+            uint refuelCost = 500;
+            string nameOfService = "Spaceship";
+            Mock<IShippingVehicle> mockSpaceShip = new Mock<IShippingVehicle>();
+            Mock<IDeliveryService> mockDeliveryService = new Mock<IDeliveryService>();
+
+            //act
+
+            //create mock vehicle
+            mockSpaceShip.SetupGet(vc => vc.MaxDistancePerRefuel).Returns(10000);
+            mockSpaceShip.SetupGet(vc => vc.MaxWeight).Returns(20000);
+            mockSpaceShip.SetupGet(vc => vc.TopSpeed).Returns(5000);
+
+            //create mock delivery service
+            mockDeliveryService.SetupGet(ds => ds.NameOfService).Returns("Spaceship");
+            mockDeliveryService.SetupGet(ds => ds.CostPerRefuel).Returns(500);
+            mockDeliveryService.SetupGet(ds => ds.ShippingVehicle).Returns(mockSpaceShip.Object);
+
+            //Assert
+            //delivery service
+            Assert.AreEqual(refuelCost, mockDeliveryService.Object.CostPerRefuel);
+            Assert.AreEqual(nameOfService, mockDeliveryService.Object.NameOfService);
+            Assert.AreEqual(mockSpaceShip.Object, mockDeliveryService.Object.ShippingVehicle);
+
+        }
+
+        [TestMethod]
         public void TestMoqShippingAndDeliveryServices()
         {
             //setup
@@ -87,9 +133,15 @@ namespace UnitTestFinal
             uint maxWeight = 1000;
             uint topSpeed = 200;
             uint refuelCost = 500;
+            //moq
+            Mock<IShippingService> mockShippingService = new Mock<IShippingService>();
+            Mock<IShippingLocation> mockLocation = new Mock<IShippingLocation>();
+            Mock<IDeliveryService> mockDeliveryService = new Mock<IDeliveryService>();
+            Mock<IShippingVehicle> mockShippingVehicle = new Mock<IShippingVehicle>();
 
             //act
-            //Mock location
+
+            //get values to test against
             uint distance = (uint)Math.Abs(destZip - startZip);
             uint numRefuels = (uint)distance / (uint)maxDist;
 
@@ -103,8 +155,8 @@ namespace UnitTestFinal
             mockDeliveryService.SetupGet(ds => ds.ShippingVehicle).Returns(mockShippingVehicle.Object);
 
             //mock location
-            mockLocation.SetupGet(l => l.DestinationZipCode).Returns(destZip);
-            mockLocation.SetupGet(l => l.StartZipCode).Returns(startZip);
+            mockLocation.SetupGet(l => l.DestinationZipCode).Returns(77035);
+            mockLocation.SetupGet(l => l.StartZipCode).Returns(60090);
 
 
             //create mock shipping service
@@ -114,13 +166,6 @@ namespace UnitTestFinal
             mockShippingService.SetupGet(ss => ss.NumRefuels).Returns((uint)mockShippingService.Object.ShippingDistance / (uint)mockShippingService.Object.DeliveryService.ShippingVehicle.MaxDistancePerRefuel);
 
             //Assert
-            //delivery service
-            Assert.AreEqual(refuelCost, mockDeliveryService.Object.CostPerRefuel);
-            Assert.AreEqual(mockShippingVehicle.Object, mockDeliveryService.Object.ShippingVehicle);
-            //shipping vehicles
-            Assert.AreEqual(maxDist, mockShippingVehicle.Object.MaxDistancePerRefuel);
-            Assert.AreEqual(maxWeight, mockShippingVehicle.Object.MaxWeight);
-            Assert.AreEqual(topSpeed, mockShippingVehicle.Object.TopSpeed);
             //shipping services
             Assert.AreEqual(mockLocation.Object, mockShippingService.Object.ShippingLocation);
             Assert.AreEqual(mockDeliveryService.Object, mockShippingService.Object.DeliveryService);

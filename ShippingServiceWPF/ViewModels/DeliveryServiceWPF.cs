@@ -13,7 +13,9 @@ namespace ShippingServiceWPF.ViewModels
 {
     class DeliveryServiceWPF:INotifyPropertyChanged
     {
-        public ICommand UpdateDeliveryService;
+        //update shipping service
+        public ICommand UpdateDeliveryService { get; set; }
+        //the shipping service
         public IShippingService ShippingService;
 
         public DeliveryServiceWPF()
@@ -35,21 +37,24 @@ namespace ShippingServiceWPF.ViewModels
             return true;
         }
 
+        //update the shipping service values
         private void ExecuteCommandUpdateDeliveryService(object parameter)
         {
             ShippingService = new DefaultShippingService(SelectedService, new List<IProduct>(), new ShippingLocation(StartZip, DestZip));
             RaisePropertyChanged("NumOfRefuels");
             RaisePropertyChanged("Distance");
+            RaisePropertyChanged("CostOfRefuels");
         }
 
         
-        //vehicle used to ship
+        //delivery service list
         public ObservableCollection<IDeliveryService> DeliveryServices
         {
             get;
             set;
         }
 
+        //selected delivery service
         public IDeliveryService SelectedService
         {
             get;
@@ -79,6 +84,7 @@ namespace ShippingServiceWPF.ViewModels
             get {return _destZip; }
             set
             {
+                //set from gui
                 if(_destZip!=value)
                 {
                     _destZip = value;
@@ -87,16 +93,22 @@ namespace ShippingServiceWPF.ViewModels
             }
         }
 
-        //number of refuels needed
-        public uint NumOfRefuels
+        //The cost of the total number of refuels
+        public string CostOfRefuels
         {
-            get { return ShippingService.NumRefuels; }
+            get { return String.Format("{0:C}", ShippingService.NumRefuels * ShippingService.DeliveryService.CostPerRefuel); }
+        }
+
+        //number of refuels needed
+        public string NumOfRefuels
+        {
+            get { return String.Format("{0:n0}",ShippingService.NumRefuels); }
         }
 
         //distance from start to finish
-        public uint Distance
+        public string Distance
         {
-            get { return ShippingService.ShippingDistance; }
+            get { return String.Format("{0:n0}", ShippingService.ShippingDistance); }
         }
 
         //Event management
